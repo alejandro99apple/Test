@@ -1,0 +1,162 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyMvLbriFmc1QfIs39oAxxw+",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/alejandro99apple/Test/blob/main/Actividad09_Alejandro_D%C3%ADaz\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 1,
+      "metadata": {
+        "id": "Je0r3Lp3YNYJ",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "a58909c7-9fac-4ef0-a815-70bb435d819f"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Hola. Inserte su cadena de números uno por uno y cuando haya terminado introduzaca 'z' para procesarlos\n",
+            "Inserte un número entero: 1\n",
+            "Inserte un número entero: 3\n",
+            "Inserte un número entero: 5\n",
+            "Inserte un número entero: -2\n",
+            "Inserte un número entero: 0\n",
+            "Inserte un número entero: z\n",
+            "¿Que operación desea realizar con la lista de números?\n",
+            "Presione:\n",
+            " 1 - Para ordenar la lista \n",
+            " 2 - Para alcular la media \n",
+            " 3 - Para calcular la desviación estándar\n",
+            "-> 1\n",
+            "lista original: [1, 3, 5, -2, 0]\n",
+            "lista ordenada: [-2, 0, 1, 3, 5]\n"
+          ]
+        }
+      ],
+      "source": [
+        "import math\n",
+        "\n",
+        "# funcion para ordenar a lista de enteros utilizando el método de la clase\n",
+        "def Ordenar(cadena):\n",
+        "    longitud = len(cadena)\n",
+        "    orden = []\n",
+        "    ordenada = []\n",
+        "\n",
+        "    for i in range (0, longitud):\n",
+        "        orden.append(0)\n",
+        "        ordenada.append(0)\n",
+        "\n",
+        "    for i in range (0, (longitud-1)):\n",
+        "\n",
+        "        for j in range (i+1,(longitud)):\n",
+        "            if(cadena[i] < cadena[j]):\n",
+        "                orden[j] = orden[j]+1\n",
+        "            else:\n",
+        "                orden[i] = orden[i]+1\n",
+        "\n",
+        "\n",
+        "    for i in range (0,longitud):\n",
+        "        ordenada[orden[i]] = cadena[i]\n",
+        "\n",
+        "    return ordenada\n",
+        "\n",
+        "\n",
+        "# función para calcular la media\n",
+        "def Media(cadena):\n",
+        "    total = 0\n",
+        "    for i in range (0, len(cadena)):\n",
+        "        total += cadena[i]\n",
+        "\n",
+        "    total = total/len(cadena)\n",
+        "    return total\n",
+        "\n",
+        "\n",
+        "# función para calcular la media\n",
+        "def DesEst(cadena):\n",
+        "    media = Media(cadena)\n",
+        "    varianza = 0\n",
+        "\n",
+        "    for i in range (0, len(cadena)):\n",
+        "        varianza += (cadena[i]-media)**2\n",
+        "    varianza = varianza/(len(cadena))\n",
+        "    desvEst = math.sqrt(varianza)\n",
+        "    return desvEst\n",
+        "\n",
+        "\n",
+        "#menú principal\n",
+        "condition = True\n",
+        "cadena = []\n",
+        "print(\"Hola. Inserte su cadena de números uno por uno y cuando haya terminado introduzaca 'z' para procesarlos\")\n",
+        "while condition:\n",
+        "    try:\n",
+        "\n",
+        "        N = input(\"Inserte un número entero: \")\n",
+        "        if N == 'z':\n",
+        "            condition = False\n",
+        "            break\n",
+        "        else:\n",
+        "            N = int(N)\n",
+        "            cadena.append(N)\n",
+        "\n",
+        "    except ValueError:\n",
+        "        print(\"Valor incorrecto... Inserte un numero Entero\")\n",
+        "\n",
+        "\n",
+        "\n",
+        "print(\"¿Que operación desea realizar con la lista de números?\")\n",
+        "option = 0\n",
+        "while option not in [1, 2, 3]:\n",
+        "\n",
+        "    try:\n",
+        "        option = int(input((\"Presione:\\n 1 - Para ordenar la lista \\n 2 - Para alcular la media \\n 3 - Para calcular la desviación estándar\\n-> \")))\n",
+        "    except ValueError:\n",
+        "        print(\"Por favor... Inserte un numero del 1 al 3\")\n",
+        "\n",
+        "if option == 1:\n",
+        "    print(\"lista original: \"+ str(cadena))\n",
+        "    ordenada = []\n",
+        "    ordenada = Ordenar(cadena)\n",
+        "    print(\"lista ordenada: \" + str(ordenada))\n",
+        "\n",
+        "elif option == 2:\n",
+        "    media = Media(cadena)\n",
+        "    print(\"La media de la lista de numeros es : \" + str(media))\n",
+        "\n",
+        "else:\n",
+        "    desvEst = DesEst(cadena)\n",
+        "    print(\"La desviación estándar (poblacional) de la lista de números es : \" + str(desvEst))\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n",
+        "\n"
+      ]
+    }
+  ]
+}
